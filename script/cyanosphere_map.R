@@ -20,7 +20,7 @@ gg1 +
 library(raster)
 
 # run to get climate data
-#climate <- getData('worldclim', var='bio', res=2.5)
+climate <- getData('worldclim', var='bio', res=2.5)
 
 #### Bio 1 ####
 latlong <- cyanosphere %>% group_by(Long, Lat, culture_ID) %>% summarize()

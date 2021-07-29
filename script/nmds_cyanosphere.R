@@ -1,6 +1,7 @@
 # load libraries 
 library(tidyverse)
 library(vegan)
+library(ggrepel)
 
 
 # load data
@@ -49,6 +50,6 @@ arrow$FG <-  rownames(arrow)
 arrow.p <- filter(arrow, P<=0.05)
 
 pdf("figures/nmds with bioclim data.pdf")
-ggplot(data=NMDS, aes(x = MDS1, y = MDS2)) + geom_point(data=NMDS, aes(MDS1, MDS2, shape = Continent, color = phylum),position=position_jitter(.1)) + theme_minimal()+ geom_segment(data=arrow.p, aes(x=0, y=0, xend=NMDS1, yend=NMDS2), arrow=arrow(length=unit(.2, "cm")*arrow.p$R)) + geom_label_repel(data=arrow.p, aes(x=NMDS1, y=NMDS2,  label = FG),  label.padding = 0.1, label.size = 0.1, size =3, max.overlaps = 15)
+ggplot(data=NMDS, aes(x = MDS1, y = MDS2)) + geom_point(data=NMDS, aes(MDS1, MDS2, shape = Continent, color = phylum),position=position_jitter(.1)) + theme_minimal()+ geom_segment(data=arrow.p, aes(x=0, y=0, xend=NMDS1, yend=NMDS2), arrow=arrow(length=unit(.2, "cm")*arrow.p$R)) + geom_label_repel(data=arrow.p, aes(x=NMDS1, y=NMDS2,  label = FG),  label.padding = 0.1, label.size = 0.1, size =3, max.overlaps = 20)
 dev.off()
 
