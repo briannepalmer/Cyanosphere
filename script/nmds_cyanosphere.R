@@ -61,7 +61,7 @@ dev.off()
 
 # look at the significance of the climate variables 
 
-model.data <- cyanosphere %>% dplyr::select(contigs, Habitat:bio19)
+model.data <- cyanosphere %>% dplyr::select(contigs, phylum, Habitat:bio19)
 model.data <- model.data[-9]
 m1 <- lm(contigs ~ ., data = model.data)
 car::Anova(m1)
@@ -71,4 +71,4 @@ m2 <- lm(contigs ~ bio1 + bio2 + bio3 + bio4 + bio5 + bio6 + bio7 + bio8 + bio9 
 car::Anova(m2)
 plot(m2)
 
-ggplot(cyanosphere, aes(x = bio1, y = contigs)) + geom_point(aes(color = phylum)) + geom_smooth(method = 'glm') + facet_wrap(.~phylum) + theme_bw() + theme(legend.position = "none")
+ggplot(cyanosphere, aes(x = bio1, y = contigs)) + geom_point(aes(color = phylum)) + geom_smooth(method = 'glm') + facet_wrap(.~family) + theme_bw() + theme(legend.position = "none")
