@@ -2,6 +2,7 @@
 library(tidyverse)
 library(vegan)
 library(ggrepel)
+library(pairwiseAdonis)
 
 
 # load data
@@ -29,6 +30,11 @@ metadata <- otu.all[-c(6:55)]
 otu.nmds <- metaMDS(otu.only, trace = FALSE, trymax = 100, "bray")
 otu.nmds$stress
 
+adonis(otu.only ~ Host_Genus, metadata) 
+
+pairwise.adonis(otu.only, factors = as.vector(metadata$Host_Genus))
+
+
 #build a data frame with NMDS coordinates and metadata 
 MDS1 = otu.nmds$points[,1] # adds the points of the NMDS 1 dimmension
 MDS2 = otu.nmds$points[,2] # adds the points of the NMDS 2 dimmension
@@ -41,7 +47,7 @@ ggplot(NMDS, aes(x = MDS1, y = MDS2)) + geom_point(aes(color = Substrate),size =
 
 as.numeric(cyanosphere.transformed[c(31:49)])
 
-env <- cyanosphere.transformed %>% group_by(OTU_ID, Substrate, Host_Order, Continent, phylum) %>% summarize_at(vars(bio1, bio12),list(mean = mean))
+env <- cyanosphere.transformed %>% group_by(OTU_ID, Substrate, Host_Genus, Continent, phylum) %>% summarize_at(vars(bio1:bio19),list(mean = mean))
 
 env.fit <- envfit(otu.nmds, env , permutations = 999, na.rm = TRUE)
 env.fit$vectors
@@ -65,4 +71,4 @@ m2 <- lm(contigs ~ bio1 + bio2 + bio3 + bio4 + bio5 + bio6 + bio7 + bio8 + bio9 
 car::Anova(m2)
 plot(m2)
 
-ggplot(cyanosphere, aes(x = bio1, y = contigs)) + geom_point(aes(color = phylum)) + geom_smooth(method = 'glm') + facet_wrap(.~phylum)
+ggplot(cyanosphere, aes(x = bio1, y = contigs)) + geom_point(aes(color = phylum)) + geom_smooth(method = 'glm') + facet_wrap(.~phylum) + theme_bw() + theme(legend.position = "none")
