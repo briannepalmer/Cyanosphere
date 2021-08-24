@@ -16,6 +16,7 @@ heatmap.data <- cyanosphere %>% dplyr::select(taxid, contigs, culture_ID)
 heatmap.data <- pivot_wider(heatmap.data, names_from = taxid, values_from = contigs, values_fn = sum)
 culture.names <-  heatmap.data$culture_ID
 heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:299)] <- ifelse(heatmap.data[c(1:299)]>0, 1, 0)
 heatmap.data <- sapply(heatmap.data, as.numeric)
 heatmap.data[is.na(heatmap.data)] <-0
 rownames(heatmap.data) <- culture.names
@@ -27,19 +28,17 @@ dev.off()
 # are the communities different between cultures
 cyanosphere.transformed <- cyanosphere %>% pivot_wider(names_from = culture_ID, values_from = contigs)
 
-otu.all <- cyanosphere.transformed %>% group_by(taxid, phylum, Host_Order, Substrate, Continent) %>% summarize_at(vars(`Aetokthonos_hydrillicola_B3-Florida`:`Trichormus_sp._ATA11-4-KO1`),list(sum = sum))
-
-otu.only <- otu.all[-c(1:5)]
+otu.all <- cyanosphere.transformed %>% group_by(Host_Species) %>% summarize_at(vars(`Aetokthonos_hydrillicola_B3-Florida`:`Trichormus_sp._ATA11-4-KO1`),list(sum = sum))
+otu.all[is.na(otu.all)] <-0
+otu.all[c(2:51)] <- ifelse(otu.all[c(2:51)]>0, 1, 0)
+otu.only <- otu.all[c(2:51)]
 head(otu.only)
 
-otu.only[c(1:50)] <- sapply(otu.all[c(1:50)],as.numeric)
-otu.only[is.na(otu.only)] <-0
-
-metadata <- otu.all[c(1:5)]
+metadata <- otu.all[c(1)]
 
 otu.nmds <- metaMDS(otu.only, trace = FALSE, trymax = 100, "bray")
-otu.nmds$stress # 0.131
-adonis(otu.only ~ taxid, data = metadata) # p = 0.001***
+otu.nmds$stress 
+adonis(otu.only ~ Host_Species, data = metadata) # didn't work 
 
 
 # make heat map
@@ -48,6 +47,7 @@ heatmap.data <- cyanosphere %>% dplyr::select(phylum, contigs, culture_ID)
 heatmap.data <- pivot_wider(heatmap.data, names_from = phylum, values_from = contigs, values_fn = sum)
 culture.names <-  heatmap.data$culture_ID
 heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
 heatmap.data <- sapply(heatmap.data, as.numeric)
 heatmap.data[is.na(heatmap.data)] <-0
 rownames(heatmap.data) <- culture.names
@@ -67,6 +67,7 @@ heatmap.data <- proteo %>% dplyr::select(order, contigs, culture_ID)
 heatmap.data <- pivot_wider(heatmap.data, names_from = order, values_from = contigs, values_fn = sum)
 culture.names <-  heatmap.data$culture_ID
 heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
 heatmap.data <- sapply(heatmap.data, as.numeric)
 heatmap.data[is.na(heatmap.data)] <-0
 rownames(heatmap.data) <- culture.names
@@ -75,20 +76,6 @@ pdf("figures/proteo heatmap.pdf")
 heatmap(heatmap.data, margins = c(10, 11.5))
 dev.off()
 
-
-# cyano only 
-
-heatmap.data <- cyanosphere %>% filter(phylum == "Cyanobacteria") %>% dplyr::select(order, contigs, culture_ID)
-heatmap.data <- pivot_wider(heatmap.data, names_from = order, values_from = contigs, values_fn = sum)
-culture.names <-  heatmap.data$culture_ID
-heatmap.data <- heatmap.data[-1]
-heatmap.data <- sapply(heatmap.data, as.numeric)
-heatmap.data[is.na(heatmap.data)] <-0
-rownames(heatmap.data) <- culture.names
-
-pdf("figures/cyano heatmap.pdf")
-heatmap(heatmap.data, margins = c(12, 14))
-dev.off()
 
 
 ### Based on Substrate ###
@@ -101,6 +88,7 @@ heatmap.data <- cyanosphere %>% dplyr::select(phylum, contigs, Substrate)
 heatmap.data <- pivot_wider(heatmap.data, names_from = phylum, values_from = contigs, values_fn = sum)
 substrate.names <-  heatmap.data$Substrate
 heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
 heatmap.data <- sapply(heatmap.data, as.numeric)
 heatmap.data[is.na(heatmap.data)] <-0
 rownames(heatmap.data) <- substrate.names
@@ -112,23 +100,12 @@ dev.off()
 heatmap.data <- proteo %>% dplyr::select(order, contigs, Substrate)
 heatmap.data <- pivot_wider(heatmap.data, names_from = order, values_from = contigs, values_fn = sum)
 heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
 heatmap.data <- sapply(heatmap.data, as.numeric)
 heatmap.data[is.na(heatmap.data)] <-0
 rownames(heatmap.data) <- substrate.names
 
 pdf("figures/proteo substrate heatmap.pdf")
-heatmap(heatmap.data, margins = c(10, 11.5))
-dev.off()
-
-# cyano only
-heatmap.data <- cyanosphere %>% filter(phylum == "Cyanobacteria") %>% dplyr::select(order, contigs, Substrate)
-heatmap.data <- pivot_wider(heatmap.data, names_from = order, values_from = contigs, values_fn = sum)
-heatmap.data <- heatmap.data[-1]
-heatmap.data <- sapply(heatmap.data, as.numeric)
-heatmap.data[is.na(heatmap.data)] <-0
-rownames(heatmap.data) <- substrate.names
-
-pdf("figures/cyano substrate heatmap.pdf")
 heatmap(heatmap.data, margins = c(10, 11.5))
 dev.off()
 
@@ -142,6 +119,7 @@ heatmap.data <- cyanosphere %>% dplyr::select(phylum, contigs, Continent)
 heatmap.data <- pivot_wider(heatmap.data, names_from = phylum, values_from = contigs, values_fn = sum)
 row.names <-  heatmap.data$Continent 
 heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
 heatmap.data <- sapply(heatmap.data, as.numeric)
 heatmap.data[is.na(heatmap.data)] <-0
 rownames(heatmap.data) <- row.names
@@ -150,17 +128,18 @@ pdf("figures/Continent heatmap.pdf")
 heatmap(heatmap.data, margins = c(10, 11.5))
 dev.off()
 
-# Cyanobacteria only 
+# Proeteobacteria only 
 
-heatmap.data <- cyanosphere %>% filter(phylum == "Cyanobacteria") %>% dplyr::select(order, contigs, Continent)
+heatmap.data <- cyanosphere %>% filter(phylum == "Proteobacteria") %>% dplyr::select(order, contigs, Continent)
 heatmap.data <- pivot_wider(heatmap.data, names_from = order, values_from = contigs, values_fn = sum)
 row.names <-  heatmap.data$Continent 
 heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
 heatmap.data <- sapply(heatmap.data, as.numeric)
 heatmap.data[is.na(heatmap.data)] <-0
 rownames(heatmap.data) <- row.names
 
-pdf("figures/Continent_cyano heatmap.pdf")
+pdf("figures/Continent_proteo heatmap.pdf")
 heatmap(heatmap.data, margins = c(10, 11.5))
 dev.off()
 
@@ -171,6 +150,7 @@ heatmap.data <- cyanosphere %>% dplyr::select(phylum, contigs, Host_Order)
 heatmap.data <- pivot_wider(heatmap.data, names_from = phylum, values_from = contigs, values_fn = sum)
 row.names <-  heatmap.data$Host_Order 
 heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
 heatmap.data <- sapply(heatmap.data, as.numeric)
 heatmap.data[is.na(heatmap.data)] <-0
 rownames(heatmap.data) <- row.names
@@ -179,41 +159,16 @@ pdf("figures/host order heatmap.pdf")
 heatmap(heatmap.data, margins = c(10, 11.5))
 dev.off()
 
-heatmap.data <- cyanosphere %>% filter(phylum == "Cyanobacteria") %>% dplyr::select(order, contigs, Host_Order)
+heatmap.data <- cyanosphere %>% filter(phylum == "Proteobacteria") %>% dplyr::select(order, contigs, Host_Order)
 heatmap.data <- pivot_wider(heatmap.data, names_from = order, values_from = contigs, values_fn = sum)
 row.names <-  heatmap.data$Host_Order 
 heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
 heatmap.data <- sapply(heatmap.data, as.numeric)
 heatmap.data[is.na(heatmap.data)] <-0
 rownames(heatmap.data) <- row.names
 
-pdf("figures/host order cyanobacteria  heatmap.pdf")
+pdf("figures/host order bacteria  heatmap.pdf")
 heatmap(heatmap.data, margins = c(12, 11.5))
 dev.off()
 
-
-# based on host Genus 
-
-heatmap.data <- cyanosphere %>% dplyr::select(phylum, contigs, Host_Genus)
-heatmap.data <- pivot_wider(heatmap.data, names_from = phylum, values_from = contigs, values_fn = sum)
-row.names <-  heatmap.data$Host_Genus
-heatmap.data <- heatmap.data[-1]
-heatmap.data <- sapply(heatmap.data, as.numeric)
-heatmap.data[is.na(heatmap.data)] <-0
-rownames(heatmap.data) <- row.names
-
-pdf("figures/host genus heatmap.pdf")
-heatmap(heatmap.data, margins = c(10, 11.5))
-dev.off()
-
-heatmap.data <- cyanosphere %>% filter(phylum == "Cyanobacteria") %>% dplyr::select(genus, contigs, Host_Genus)
-heatmap.data <- pivot_wider(heatmap.data, names_from = genus, values_from = contigs, values_fn = sum)
-row.names <-  heatmap.data$Host_Genus
-heatmap.data <- heatmap.data[-1]
-heatmap.data <- sapply(heatmap.data, as.numeric)
-heatmap.data[is.na(heatmap.data)] <-0
-rownames(heatmap.data) <- row.names
-
-pdf("figures/host order cyanobacteria  heatmap.pdf")
-heatmap(heatmap.data, margins = c(12, 11.5))
-dev.off()
