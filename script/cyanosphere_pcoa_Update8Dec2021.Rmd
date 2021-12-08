@@ -1,0 +1,123 @@
+---
+title: "Untitled"
+author: "Brianne"
+date: "12/8/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/Users/Brianne/Documents/Cyanosphere/")
+```
+
+# Load Libraries
+```{r}
+library(ecodist)
+library(tidyverse)
+```
+# load data
+```{r}
+cyanosphere <- read.csv("data/autometa_assembly_cyanosphere.csv")
+cyanosphere.transformed <- cyanosphere %>% pivot_wider(names_from = taxid, values_from = contigs)
+cyano.all <-cyanosphere.transformed
+```
+
+Make all values numeric
+```{r}
+cyano.all[c(50:348)] <- sapply(cyano.all[c(50:348)],as.numeric)
+cyano.all[is.na(cyano.all)] <-0
+```
+
+Group dataframe by culture ID, habitat, location, continent, substrate, and host phylogeny 
+```{r}
+otu.all <- cyano.all %>% group_by(culture_ID, Habitat, Location, Continent, Substrate, Host_Phylum, Host_Class, Host_Order, Host_Family, Host_Genus) %>% summarize_at(vars(bio1:`159191`),list(mean = mean))
+```
+
+# create presence absence matrix 
+```{r}
+otu.all[c(30:328)] <- ifelse(otu.all[c(30:328)]>0, 1, 0)
+```
+
+Make numeric matrix and metadata matrix
+```{r}
+otu.only <- otu.all[c(30:328)]
+head(otu.only)
+metadata <- otu.all[-c(30:328)]
+```
+
+# make bray-curtis matrix
+```{r}
+otu.bray <- vegdist(otu.only, method = "bray") # dissimilarity matrix using bray-curtis distance indices 
+```
+
+```{r}
+pcoaVS <- pco(otu.bray, negvals = "zero", dround = 0) # if negvals = 0 sets all negative eigenvalues to zero
+```
+
+```{r}
+pcoaVS$values # eigenvalue for each component. This is a measure of the variance explained by each dimension
+pcoaVS$vectors # eigenvectors. Each column contains the scores for that dimension.
+```
+
+Make dataframe for plot with vectors and metadata
+```{r}
+pcoa1 = pcoaVS$vectors[,1] # adds the points of the NMDS 1 dimmension
+pcoa2 = pcoaVS$vectors[,2] # adds the points of the NMDS 2 dimmension
+
+MDS = data.frame(pcoa1 = pcoa1, pcoa2 = pcoa2)
+MDS = cbind(MDS, metadata)
+```
+
+Make plot
+```{r}
+ggplot(MDS, aes(x = pcoa1, y = pcoa2)) + geom_point(aes(color = Substrate), size = 2) + 
+  theme_bw() + theme(legend.position = "right") #+ stat_ellipse(aes(color = Host_Family))
+
+```
+
+PERMANOVA
+```{r}
+adonis(otu.only ~ Substrate, metadata)
+```
+
+# Permanova on all variables
+```{r}
+adonis(otu.only ~ culture_ID, metadata) # p=1
+adonis(otu.only ~ Habitat, metadata) # p = 0.01
+adonis(otu.only ~ Location, metadata) # p = 0.002
+adonis(otu.only ~ Continent, metadata) # p = 0.008
+adonis(otu.only ~ Substrate, metadata) # p = 0.05
+adonis(otu.only ~ Host_Class, metadata) # p = 0.634
+adonis(otu.only ~ Host_Order, metadata) # p = 0.042
+adonis(otu.only ~ Host_Family, metadata) # p = 0.005
+adonis(otu.only ~ Host_Genus, metadata) # p = 0.018
+```
+Look at environmental variables 
+```{r}
+env <- metadata[c(11:29)]
+
+# CMD
+cmd <- isomapdist(vegdist(otu.only, method="bray")) #cmdscale is classical metric multidimensional scaling and this is the way to measure the effect of environmetnal variables on the community composition, this analysis doesn't work with the pcoa created earlier
+```
+
+
+```{r}
+# Plot CMD
+ordiplot(cmd) #plot looks similar to pcoa
+```
+
+```{r}
+# Fit environmental variables
+fit_env <- envfit(ord=cmd, env=env) 
+fit_env$vectors
+```
+
+```{r}
+arrow <- data.frame(fit_env$vectors$arrows, R = fit_env$vectors$r, P = fit_env$vectors$pvals) # make dataframe with vectors for arrows
+arrow$FG <-  rownames(arrow)
+arrow.p <- filter(arrow, P<=0.05)
+```
+
+```{r}
+ggplot(data=MDS, aes(x = pcoa1, y = pcoa2)) + geom_point(data=MDS,aes(color = Substrate), position=position_jitter(.1)) + theme_minimal() + geom_segment(data=arrow.p, aes(x=0, y=0, xend= Dim1, yend=Dim2), arrow=arrow(length=unit(.2, "cm")*arrow.p$R)) + geom_label_repel(data=arrow.p, aes(x=Dim1, y=Dim2,  label = FG),  label.padding = 0.1, label.size = 0.1, size =3, max.overlaps = 30)
+```
