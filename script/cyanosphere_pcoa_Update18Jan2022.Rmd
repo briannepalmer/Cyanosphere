@@ -1,0 +1,190 @@
+---
+title: "cyanosphere_pcoa_update_18Jan2022"
+author: "Brianne"
+date: "1/18/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/Users/Brianne/Documents/Cyanosphere/")
+set.seed(12345)
+```
+
+# Load Libraries
+```{r}
+library(ecodist)
+library(tidyverse)
+library(vegan)
+library(viridis)
+library(ggrepel)
+library(asbio)
+```
+
+# load data
+```{r}
+cyanosphere <- read.csv("data/autometa_assembly_cyanosphere.csv")
+cyanosphere.transformed <- cyanosphere %>% pivot_wider(names_from = taxid, values_from = contigs)
+cyano.all <-cyanosphere.transformed
+```
+
+Make all values numeric
+```{r}
+cyano.all[c(51:349)] <- sapply(cyano.all[c(51:349)],as.numeric)
+cyano.all[c(51:349)][is.na(cyano.all[c(51:349)])] <-0
+```
+
+Group by culture_ID to get just 50 points 
+
+Group dataframe by culture ID and maintain metadata
+```{r}
+otu.all <- cyano.all %>% group_by(culture_ID, Habitat, Location, Continent, Substrate, Host_Phylum, Host_Class, Host_Order, Host_Family, Host_Genus) %>% summarize_at(vars(bio1:`159191`),list(mean = mean))
+```
+
+
+# create presence absence matrix 
+```{r}
+otu.all[c(30:328)] <- ifelse(otu.all[c(30:328)]>0, 1, 0)
+otu.only <- otu.all[c(30:328)]
+metadata <- otu.all[c(1:29)]
+```
+
+Calculate beta diversity
+beta = gamma/alpha -1
+
+```{r}
+alpha <- alpha.div(otu.only, "simp")
+gamma <- with(metadata, specnumber(otu.only, culture_ID))
+
+beta <- as.matrix(gamma/alpha -1)
+```
+
+```{r}
+metadata$beta <- beta
+beta1 <- beta[-34,]
+```
+
+Anova on beta diversity 
+
+```{r}
+adonis(beta1 ~ culture_ID, metadata[-34,])
+```
+
+# make bray-curtis matrix
+```{r}
+otu.bray <- vegdist(otu.only, method = "bray")# dissimilarity matrix using bray-curtis distance indices 
+```
+
+```{r}
+pcoaVS <- pco(otu.bray, negvals = "zero", dround = 0) # if negvals = 0 sets all negative eigenvalues to zero
+```
+
+Look at environmental variables 
+```{r}
+env <- metadata[c(2:29)]
+
+# CMD
+cmd <- isomapdist(vegdist(otu.only, method="bray"), k=3) #cmdscale is classical metric multidimensional scaling and this is the way to measure the effect of environmetnal variables on the community composition, this analysis doesn't work with the pcoa created earlier
+```
+
+```{r}
+# Plot CMD
+ordiplot(cmd) #plot looks similar to pcoa
+```
+
+Make dataframe for plot with vectors and metadata
+```{r}
+pcoa1 = pcoaVS$vectors[,1] # adds the points of the NMDS 1 dimmension
+pcoa2 = pcoaVS$vectors[,2] # adds the points of the NMDS 2 dimmension
+
+MDS = data.frame(pcoa1 = pcoa1, pcoa2 = pcoa2)
+MDS = cbind(MDS, metadata)
+```
+
+Make plot
+```{r}
+ggplot(MDS, aes(x = pcoa1, y = pcoa2)) + geom_point(aes(color = culture_ID), size = 2) + 
+  theme_bw() + theme(legend.position = "none") + geom_label(data = MDS, aes(label = culture_ID))
+
+```
+
+```{r}
+# Fit environmental variables
+set.seed(12345)
+fit_env <- envfit(ord=cmd, env=env) 
+fit_env$vectors
+```
+
+```{r}
+arrow <- data.frame(fit_env$vectors$arrows, R = fit_env$vectors$r, P = fit_env$vectors$pvals) # make dataframe with vectors for arrows
+arrow$FG <-  rownames(arrow)
+arrow.p <- filter(arrow, P<=0.05)
+arrow.p$label <- c("Annual Mean Temp", "Min Temp Coldest Month", "Mean Temp Coldest Quarter", "Annual Precip","Precip Wettest Month", "Precip Driest Month", "Precip Wettest Quarter", "Precip Driest Quarter", "Precip Warmest Quarter","Precip Coldest Quarter")
+```
+
+```{r}
+pdf("figures/PCOA_cultureID_envArrows.pdf")
+ggplot(data=MDS, aes(x = pcoa1, y = pcoa2)) + geom_point(aes(color = Substrate)) + theme_minimal() + geom_segment(data=arrow.p, aes(x=0, y=0, xend= X1, yend=X2), arrow=arrow(length=unit(0.001, "mm")*arrow.p$R)) + geom_label_repel(data=arrow.p, aes(x=X1, y=X2,  label = label),  label.padding = 0.1, label.size = 0.1, size =3, max.overlaps = 30)
+dev.off()
+```
+Permanova on all variables
+```{r}
+set.seed(12345)
+adonis(otu.only ~ Habitat, metadata) # p = 0.011
+adonis(otu.only ~ Location, metadata) # p = 0.001
+adonis(otu.only ~ Continent, metadata) # p = 0.007
+adonis(otu.only ~ Substrate, metadata) # p = 0.018
+adonis(otu.only ~ Host_Class, metadata) # p = 0.65
+adonis(otu.only ~ Host_Order, metadata) # p = 0.026
+adonis(otu.only ~ Host_Family, metadata) # p = 0.007
+adonis(otu.only ~ Host_Genus, metadata) # p = 0.018
+```
+
+```{r}
+library(pairwiseAdonis)
+pairwise.adonis(otu.only,metadata$Habitat)
+```
+
+```{r}
+ggplot(MDS, aes(x = pcoa1, y = pcoa2)) + geom_point(aes(color = Substrate), size = 3, position=position_jitter(width=.1,height=.1)) + 
+  theme_bw() + theme(legend.position = "right") + stat_ellipse(aes(color = Substrate))
+
+```
+
+```{r}
+ggplot(MDS, aes(x = pcoa1, y = pcoa2)) + geom_point(aes(color = Habitat), size = 3, position=position_jitter(width=.1,height=.1)) + 
+  theme_bw() + theme(legend.position = "right") + stat_ellipse(aes(color = Habitat))
+
+```
+
+```{r}
+ggplot(MDS, aes(x = pcoa1, y = pcoa2)) + geom_point(aes(color = Location), size = 3, position=position_jitter(width=.1,height=.1)) + 
+  theme_bw() + theme(legend.position = "right") + stat_ellipse(aes(color = Location))
+
+```
+
+```{r}
+ggplot(MDS, aes(x = pcoa1, y = pcoa2)) + geom_point(aes(color = Continent), size = 3, position=position_jitter(width=.1,height=.1)) + 
+  theme_bw() + theme(legend.position = "right") + stat_ellipse(aes(color = Continent))
+
+```
+
+```{r}
+ggplot(MDS, aes(x = pcoa1, y = pcoa2)) + geom_point(aes(color = Host_Order), size = 3, position=position_jitter(width=.1,height=.1)) + 
+  theme_bw() + theme(legend.position = "right") + stat_ellipse(aes(color = Host_Order))
+
+```
+
+```{r}
+ggplot(MDS, aes(x = pcoa1, y = pcoa2)) + geom_point(aes(color = Host_Family), size = 3, position=position_jitter(width=.1,height=.1)) + 
+  theme_bw() + theme(legend.position = "right") + stat_ellipse(aes(color = Host_Family))
+
+```
+
+```{r}
+ggplot(MDS, aes(x = pcoa1, y = pcoa2)) + geom_point(aes(color = Host_Genus), size = 3, position=position_jitter(width=.1,height=.1)) + 
+  theme_bw() + theme(legend.position = "right") + stat_ellipse(aes(color = Host_Genus))
+
+```
+
+

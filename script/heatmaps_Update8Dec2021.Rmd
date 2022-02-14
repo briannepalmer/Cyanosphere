@@ -1,0 +1,180 @@
+---
+title: "Heat Maps"
+author: "Brianne"
+date: "12/8/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/Users/Brianne/Documents/Cyanosphere/")
+```
+
+# what organisms are present in the cyanosphere 
+
+# load libraries 
+```{r}
+library(tidyverse)
+library(vegan)
+library(ggrepel)
+```
+
+# load data
+```{r}
+cyanosphere <- read.csv("data/autometa_assembly_cyanosphere.csv")
+```
+
+```{r}
+ggplot(cyanosphere, aes(fill = phylum, y = contigs, x = culture_ID)) + geom_bar(position = "fill", stat = "identity")+ theme_bw()  + labs(y = "% abundance") + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), text = element_text(size = 8), plot.margin = unit(c(0.2, 0.2, 0.2, 2), "cm"))
+```
+
+Make Heatmaps
+
+```{r}
+heatmap.data <- cyanosphere %>% dplyr::select(taxid, contigs, culture_ID)
+heatmap.data <- pivot_wider(heatmap.data, names_from = taxid, values_from = contigs, values_fn = sum)
+culture.names <-  heatmap.data$culture_ID
+heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:299)] <- ifelse(heatmap.data[c(1:299)]>0, 1, 0)
+heatmap.data <- sapply(heatmap.data, as.numeric)
+heatmap.data[is.na(heatmap.data)] <-0
+rownames(heatmap.data) <- culture.names
+
+heatmap(heatmap.data, margins = c(10, 11.5))
+```
+Heat nap showing the abundance of different phyla in each culture
+```{r}
+heatmap.data <- cyanosphere %>% dplyr::select(phylum, contigs, culture_ID)
+heatmap.data <- pivot_wider(heatmap.data, names_from = phylum, values_from = contigs, values_fn = sum)
+culture.names <-  heatmap.data$culture_ID
+heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
+heatmap.data <- sapply(heatmap.data, as.numeric)
+heatmap.data[is.na(heatmap.data)] <-0
+rownames(heatmap.data) <- culture.names
+
+heatmap(heatmap.data, margins = c(10, 11.5))
+```
+
+look just at proteobacteria 
+
+```{r}
+proteo <- cyanosphere %>% filter(phylum == "Proteobacteria")
+
+ggplot(proteo, aes(fill = order, y = contigs, x = culture_ID)) + geom_bar(position = "fill", stat = "identity")+ theme_bw()  + labs(y = "% abundance") + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), text = element_text(size = 8), plot.margin = unit(c(0.2, 0.2, 0.2, 2), "cm"))
+```
+
+proteobacteria orders in each culture
+```{r}
+heatmap.data <- proteo %>% dplyr::select(order, contigs, culture_ID)
+heatmap.data <- pivot_wider(heatmap.data, names_from = order, values_from = contigs, values_fn = sum)
+culture.names <-  heatmap.data$culture_ID
+heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
+heatmap.data <- sapply(heatmap.data, as.numeric)
+heatmap.data[is.na(heatmap.data)] <-0
+rownames(heatmap.data) <- culture.names
+
+heatmap(heatmap.data, margins = c(10, 11.5))
+```
+
+
+Based on Substrate
+
+```{r}
+
+ggplot(cyanosphere, aes(fill = phylum, y = contigs, x = Substrate)) + geom_bar(position = "fill", stat = "identity")+ theme_bw()  + labs(y = "% abundance") + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), text = element_text(size = 8), plot.margin = unit(c(0.2, 0.2, 0.2, 2), "cm"))
+```
+
+What phyla are present in each substrate?
+```{r}
+heatmap.data <- cyanosphere %>% dplyr::select(phylum, contigs, Substrate)
+heatmap.data <- pivot_wider(heatmap.data, names_from = phylum, values_from = contigs, values_fn = sum)
+substrate.names <-  heatmap.data$Substrate
+heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
+heatmap.data <- sapply(heatmap.data, as.numeric)
+heatmap.data[is.na(heatmap.data)] <-0
+rownames(heatmap.data) <- substrate.names
+
+heatmap(heatmap.data, margins = c(10, 11.5))
+
+```
+proteobacteria orders in each substrate
+```{r}
+heatmap.data <- proteo %>% dplyr::select(order, contigs, Substrate)
+heatmap.data <- pivot_wider(heatmap.data, names_from = order, values_from = contigs, values_fn = sum)
+heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
+heatmap.data <- sapply(heatmap.data, as.numeric)
+heatmap.data[is.na(heatmap.data)] <-0
+rownames(heatmap.data) <- substrate.names
+
+heatmap(heatmap.data, margins = c(10, 11.5))
+
+```
+
+Based on Continent
+
+```{r}
+ggplot(cyanosphere, aes(fill = phylum, y = contigs, x = Continent)) + geom_bar(position = "fill", stat = "identity")+ theme_bw()  + labs(y = "% abundance") + theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1), text = element_text(size = 8), plot.margin = unit(c(0.2, 0.2, 0.2, 2), "cm"))
+`dev.off()
+```
+whay phyla are present on each continent?
+```{r}
+heatmap.data <- cyanosphere %>% dplyr::select(phylum, contigs, Continent)
+heatmap.data <- pivot_wider(heatmap.data, names_from = phylum, values_from = contigs, values_fn = sum)
+row.names <-  heatmap.data$Continent 
+heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
+heatmap.data <- sapply(heatmap.data, as.numeric)
+heatmap.data[is.na(heatmap.data)] <-0
+rownames(heatmap.data) <- row.names
+
+heatmap(heatmap.data, margins = c(10, 11.5))
+```
+
+Proeteobacteria only 
+
+```{r}
+heatmap.data <- cyanosphere %>% filter(phylum == "Proteobacteria") %>% dplyr::select(order, contigs, Continent)
+heatmap.data <- pivot_wider(heatmap.data, names_from = order, values_from = contigs, values_fn = sum)
+row.names <-  heatmap.data$Continent 
+heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
+heatmap.data <- sapply(heatmap.data, as.numeric)
+heatmap.data[is.na(heatmap.data)] <-0
+rownames(heatmap.data) <- row.names
+
+heatmap(heatmap.data, margins = c(10, 11.5))
+`dev.off()
+```
+
+based on Host Order 
+
+```{r}
+heatmap.data <- cyanosphere %>% dplyr::select(phylum, contigs, Host_Order)
+heatmap.data <- pivot_wider(heatmap.data, names_from = phylum, values_from = contigs, values_fn = sum)
+row.names <-  heatmap.data$Host_Order 
+heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
+heatmap.data <- sapply(heatmap.data, as.numeric)
+heatmap.data[is.na(heatmap.data)] <-0
+rownames(heatmap.data) <- row.names
+
+heatmap(heatmap.data, margins = c(10, 11.5))
+```
+Host order and proteobacteria
+```{r}
+heatmap.data <- cyanosphere %>% filter(phylum == "Proteobacteria") %>% dplyr::select(order, contigs, Host_Order)
+heatmap.data <- pivot_wider(heatmap.data, names_from = order, values_from = contigs, values_fn = sum)
+row.names <-  heatmap.data$Host_Order 
+heatmap.data <- heatmap.data[-1]
+heatmap.data[c(1:12)] <- ifelse(heatmap.data[c(1:12)]>0, 1, 0)
+heatmap.data <- sapply(heatmap.data, as.numeric)
+heatmap.data[is.na(heatmap.data)] <-0
+rownames(heatmap.data) <- row.names
+
+heatmap(heatmap.data, margins = c(12, 11.5))
+```
+
