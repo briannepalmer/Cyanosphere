@@ -8,13 +8,19 @@ library(mapdata)
 library(tidyverse)
 
 cyanosphere <- read.csv("data/autometa_assembly_cyanosphere.csv")
+cyanosphere.transformed <- cyanosphere %>% pivot_wider(names_from = taxid, values_from = contigs)
+cyano.all <-cyanosphere.transformed
+
+# Group by culture_ID to get just 50 points 
+
+otu.all <- cyano.all %>% group_by(culture_ID, Habitat, Location, Continent, Lat, Long, Substrate, Host_Phylum, Host_Class, Host_Order, Host_Family, Host_Genus) %>% summarize_at(vars(bio1:`159191`),list(mean = mean))
+otu.all$label <- c(1:50)
 
 world <- map_data("world") 
 gg1 <- ggplot() + geom_polygon(data = world, aes(x=long, y = lat, group = group), fill = "gray") + 
   coord_fixed(1.3) + theme_bw()
-
 gg1 + 
-  geom_point(data = cyanosphere, aes(x = Long, y = Lat, color = Substrate), size = 1.5) + geom_jitter()
+  geom_point(data = otu.all, aes(x = Long, y = Lat, color = culture_ID), size = 2) + geom_jitter() + geom_text_repel(data = otu.all, aes(x = Long, y = Lat, label = label), max.overlaps = 100) + theme(legend.position = "none")
 
 # add climate data
 library(raster)

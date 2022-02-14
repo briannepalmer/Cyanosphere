@@ -103,8 +103,10 @@ MDS = cbind(MDS, metadata)
 
 Make plot
 ```{r}
+
+MDS$label <- c(1:50)
 ggplot(MDS, aes(x = pcoa1, y = pcoa2)) + geom_point(aes(color = culture_ID), size = 2) + 
-  theme_bw() + theme(legend.position = "none") + geom_label(data = MDS, aes(label = culture_ID))
+  theme_bw() + theme(legend.position = "none") + geom_text_repel(data = MDS, aes(label = label), max.overlaps = 50)
 
 ```
 
