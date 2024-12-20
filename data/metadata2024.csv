@@ -1,0 +1,107 @@
+,Name,Host,Habitat,Habitat2,Habitat3,Location,Continent,Substrate,Parentmaterial,Host_Phylum,Host_Class,Host_Order,Host_Family,Host_Genus,Host_Species,Annual_Mean_Temperature,Annual_Precipitation,Altitude
+Aetokthonos_hydrillicola,Aetokthonos hydrillicola,Aetokthonos_hydrillicola,aquatic epiphyte,fresh_water,temperate,"South Carolina,
+USA",North America,fresh water,,Cyanobacteria,unclassified,Nostocales,Hapalosiphonaceae,Aetokthonos,Aetokthonos hydrillicola,16.6,1186,102
+Aphanocapsa_lilacina,Aphanocapsa lilacina,Aphanocapsa_lilacina,cave rock wall,rock_wall,tropical,"Hawaii,
+USA",Pacific Islands,subaerial,,Cyanobacteria,Gloeobacteria,Gloeobacterales,Gloeobacteraceae,Gloeobacter,"""Aphanocapsa lilacina""",23.1,3045,21
+Aphanocapsa_sp.,Aphanocapsa sp.,Aphanocapsa_sp.,desert wet wall,wet_wall,desert,"Utah,
+USA",North America,subaerial,,Cyanobacteria,unclassified,Acaryochloridales,unclassified,"""Aphanothece"" ","""Aphanocapsa"" sp.",10.2,220,1755
+Aphanothece_saxicola,Aphanothece saxicola,Aphanothece_saxicola,desert wet wall,wet_wall,desert,"Utah,
+USA",North America,subaerial,,Cyanobacteria,unclassified,Synechococcales,Synechococcaceae,Cyanobium,"""Aphanothece saxicola""",7,296,2043
+Aphanothece_sp.,Aphanothece sp.,Aphanothece_sp.,desert soil,desert_soil,desert,"California,
+USA",North America,soil,dolomite,Cyanobacteria,unclassified,Gomontiellales,unclassified,"""Aphanothece"" ","""Aphanothece"" sp.",16.6,162,1084
+Brasilonema_angustatum,Brasilonema angustatum,Brasilonema_angustatum,tropical soil,tropical_soil,tropical,"Hawaii,
+USA",Pacific Islands,soil,,Cyanobacteria,unclassified,Nostocales,Scytonemataceae,Brasilonema,Brasilonema angustatum,23.4,1706,229
+Brasilonema_octagenarum,Brasilonema octagenarum,Brasilonema_octagenarum,on wood in tropics,wood,tropical,"Hawaii,
+USA",Pacific Islands,subaerial,,Cyanobacteria,unclassified,Nostocales,Scytonemataceae,Brasilonema,Brasilonema octagenarum,23.4,1706,229
+Calothrix_sp.,Calothrix sp.,Calothrix_sp.,desert soil,desert_soil,desert,"California,
+USA",North America,soil,granitic,Cyanobacteria,unclassified,Nostocales,Calotrichaceae,Calothrix,Calothrix desertica,19.2,96,654
+Chroococcus_sp.,Chroococcus sp.,Chroococcus_sp.,desert soil,desert_soil,desert,"California,
+USA",North America,soil,dolomite,Cyanobacteria,unclassified,Chroococcidiopsidales,Aliterellaceae,Aliterella,"""Chroococcus"" sp.",16.6,162,1084
+Cyanomargarita_calcarea,Cyanomargarita calcarea,Cyanomargarita_calcarea,desert wet wall,wet_wall,desert,"Utah,
+USA",North America,subaerial,,Cyanobacteria,unclassified,Nostocales,Cyanomargaritaceae,Cyanomargarita,Cyanomargarita calcarea,8.9,294,1873
+Cyanosarcina_radialis,Cyanosarcina radialis,Cyanosarcina_radialis,cave rock wall,rock_wall,tropical,"Hawaii,
+USA",Pacific Islands,subaerial,,Cyanobacteria,unclassified,Gomontiellales,unclassified,Cyanosarcina,Cyanosarcina radialis,23.6,1291,11
+Desmonostoc_geniculatum,Desmonostoc geniculatum,Desmonostoc_geniculatum,cave rock wall,rock_wall,tropical,"Hawaii,
+USA",Pacific Islands,subaerial,,Cyanobacteria,unclassified,Nostocales,Nostocaceae,Desmonostoc,Desmonostoc geniculatum,23.1,3045,21
+Desmonostoc_vinosum,Desmonostoc vinosum,Desmonostoc_vinosum,cave rock wall,rock_wall,tropical,"Hawaii,
+USA",Pacific Islands,subaerial,,Cyanobacteria,unclassified,Nostocales,Nostocaceae,Desmonostoc,Desmonostoc vinosum,23.1,3045,106
+Drouetiella_hepatica,Drouetiella hepatica,Drouetiella_hepatica,rock surface,rock,temperate,"Kosice,
+Slovakia",Europe,subaerial,,Cyanobacteria,unclassified,Oculatellales,Oculatellaceae.,Drouetiella,Drouetiella hepatica,5.2,779,701
+Drouetiella_lurida,Drouetiella lurida,Drouetiella_lurida,temperate soil,temperate_soil,temperate,"Most, Czech Republic",Europe,soil,,Cyanobacteria,unclassified,Oculatellales,Oculatellaceae,Drouetiella,Drouetiella lurida,NA,NA,NA
+Gloeocapsa_sp.,Gloeocapsa sp.,Gloeocapsa_sp.,desert soil,desert_soil,desert,"Utah,
+USA",North America,soil,,Cyanobacteria,unclassified,Chroococcidiopsidales,unclassified,Gloeocapsa,Gloeocapsa sp.,8.5,379,1687
+Goleter_apundmare,Goleter apundmare,Goleter_apundmare,cave rock wall,rock_wall,tropical,"Hawaii,
+USA",Pacific Islands,subaerial,,Cyanobacteria,unclassified,Nostocales,Nostocaceae,Goleter,Goleter apudmare,23.1,3045,21
+Hassallia_sp.,Hassallia sp.,Hassallia_sp.,desert soil,desert_soil,desert,"California,
+USA",North America,soil,granitic,Cyanobacteria,unclassified,Nostocales,Tolypothrichaceae,"""Hassallia""",unclassified,21,120,623
+Hormoscilla_sp.,Hormoscilla sp.,Hormoscilla_sp.,desert soil,desert_soil,desert,"California,
+USA",North America,soil,dolomite,Cyanobacteria,unclassified,Gomontiellales,Gomontiellaceae,Hormoscilla,unclassified,16.6,162,1084
+Iphinoe_sp.,Iphinoe sp.,Iphinoe_sp.,tropical soil,tropical_soil,tropical,"Hawaii,
+USA",Pacific Islands,soil,,Cyanobacteria,unclassified,Nostocales,Scytonemataceae,Iphinoe,unclassified,22.8,2504,136
+Kaiparowitsia_implicata,Kaiparowitsia implicata,Kaiparowitsia_implicata,desert wet wall,wet_wall,desert,"Utah,
+USA",North America,subaerial,,Cyanobacteria,unclassified,Oculatellales,Oculatellaceae.,Kaiparowitsia,Kaiparowitsia implicata,8.3,270,1880
+Kastovskya_adunca,Kastovskya adunca,Kastovskya_adunca,desert soil,desert_soil,desert,"Atacama,
+Chile",South America,soil,,Cyanobacteria,unclassified,Coleofasciculales,Coleofasciculaceae,Kastovskya,Kastovskya adunca,18.7,17,340
+Komarekiella_atlantica,Komarekiella atlantica,Komarekiella_atlantica,tropical vernal pool,vernal_pool,tropical,"Hawaii,
+USA",Pacific Islands,hydroterrestrial,,Cyanobacteria,unclassified,Nostocales,Nostocaceae,Komarekiella,Komarekiella atlantica,23.1,1446,117
+Lyngbya_sp.,Lyngbya sp.,Lyngbya_sp.,tropical soil,tropical_soil,tropical,"Hawaii,
+USA",Pacific Islands,soil,,Cyanobacteria,unclassified,Leptolynbyales,Leptolyngbyaceae,"""Lyngbya"" ","""Lyngbya"" sp.",22.9,2128,28
+Microcoleus_vaginatus,Microcoleus vaginatus,Microcoleus_vaginatus,desert soil,desert_soil,desert,"California,
+USA",North America,soil,granitic,Cyanobacteria,unclassified,Oscillatoriales,Microcoleaceae,Microcoleus,Microcoleus vaginatus,18.7,167,794
+Mojavia_pulchra,Mojavia pulchra,Mojavia_pulchra,desert soil,desert_soil,desert,"California,
+USA",North America,soil,granitic,Cyanobacteria,unclassified,Nostocales,Nostocaceae,Mojavia,Mojavia pulchra,20.3,136,692
+Myxacorys_californica,Myxacorys californica,Myxacorys_californica,desert soil,desert_soil,desert,"California,
+USA",North America,soil,granitic,Cyanobacteria,unclassified,Leptolynbyales,Leptolyngbyaceae,Myxacorys,Myxacorys californica,14.9,311,1332
+Myxacorys_chilensis,Myxacorys chilensis,Myxacorys_chilensis,desert soil,desert_soil,desert,"Coquimbo,
+Chile",South America,soil,,Cyanobacteria,unclassified,Leptolynbyales,Leptolyngbyaceae,Myxacorys,Myxacorys chilensis,15,66,222
+Nodosilinea_sp.,Nodosilinea sp.,Nodosilinea_sp.,desert soil,desert_soil,desert,"California,
+USA",North America,soil,granitic,Cyanobacteria,unclassified,Nodosilineales,Prochlorotrichaceae,Nodosilinea,unclassified,20.4,119,564
+Nostoc_desertoum,Nostoc desertoum,Nostoc_desertoum,desert soil,desert_soil,desert,"California,
+USA",North America,soil,gypsiferous,Cyanobacteria,unclassified,Nostocales,Nostocaceae,Nostoc,Nostoc desertorum,17.1,153,1048
+Nostoc_indistinguendum,Nostoc indistinguendum,Nostoc_indistinguendum,desert soil,desert_soil,desert,"California,
+USA",North America,soil,gypsiferous,Cyanobacteria,unclassified,Nostocales,Nostocaceae,Nostoc,Nostoc indistinguendum,17.1,153,1048
+Oculatella_coburnii,Oculatella coburnii,Oculatella_coburnii,desert soil,desert_soil,desert,"California, USA",North America,soil,granitic,Cyanobacteria,unclassified,Oculatellales,Oculatellaceae,Oculatella,Oculatella coburnii,NA,NA,NA
+Oscillatoria_princeps,Oscillatoria princeps,Oscillatoria_princeps,surface water,fresh_water,temperate,"Lower Austria,
+Austria",Europe,fresh water,,Cyanobacteria,unclassified,Oscillatoriales,Oscillatoriaceae,Oscillatoria,Oscillatoria princeps,6.2,967,613
+Oscillatoria_tanganyikae,Oscillatoria tanganyikae,Oscillatoria_tanganyikae,desert soil,desert_soil,desert,"California,
+USA",North America,soil,granitic,Cyanobacteria,unclassified,Leptolynbyales,Leptolyngbyaceae,"""Oscillatoria""","""Oscillatoria tanganyikae""",17.8,106,839
+Pegethrix_bostrychoides,Pegethrix bostrychoides,Pegethrix_bostrychoides,desert wet wall,wet_wall,desert,"Utah,
+USA",North America,subaerial,,Cyanobacteria,unclassified,Oculatellales,Oculatellaceae.,Pegethrix,Pegethrix bostrychoides,11.8,173,1541
+Phormidesmis_sp.,Phormidesmis sp.,Phormidesmis_sp.,desert soil,desert_soil,desert,"California, USA",North America,soil,granitic,Cyanobacteria,unclassified,Leptolynbyales,Leptolyngbyaceae,Phromidesmis,,17.9,192,NA
+Plectolyngbya_sp.,Plectolyngbya sp.,Plectolyngbya_sp.,desert soil,desert_soil,desert,"California,
+USA",North America,soil,granitic,Cyanobacteria,unclassified,Leptolynbyales,Leptolyngbyaceae,Plectolyngbya,Plectolyngbya sp.,15.4,299,1273
+Pleurocapsa_ercegoicii,Pleurocapsa ercegoicii,Pleurocapsa_ercegoicii,desert soil,desert_soil,desert,"Atacama,
+Chile",South America,soil,,Cyanobacteria,unclassified,Chroococcales,,Pleurocapsa,Pleurocapsa ercegoicii,NA,NA,NA
+Pleurocapsa_minor_1,Pleurocapsa minor 1,Pleurocapsa_minor_1,tropical rock wall,rock_wall,tropical,"Hawaii,
+USA",Pacific Islands,subaerial,,Cyanobacteria,unclassified,Chroococcales,Pleurocapsaceae,Pleurocapsa,Pleurocapsa minor,21.9,3229,389
+Pleurocapsa_minor_2,Pleurocapsa minor 2,Pleurocapsa_minor_2,desert wet wall,wet_wall,desert,"Utah,
+USA",North America,subaerial,,Cyanobacteria,unclassified,Chroococcales,Pleurocapsaceae,Pleurocapsa,Pleurocapsa minor,10.2,220,1755
+Rexia_erecta,Rexia erecta,Rexia_erecta,temperate wet wall,wet_wall,temperate,"North Carolina, USA",North America,subaerial,,Cyanobacteria,unclassified,Nostocales,Tolypothrichaceae,Rexia,erecta,10.8,1423,NA
+Roholtiella_mojaviensis,Roholtiella mojaviensis,Roholtiella_mojaviensis,desert soil,desert_soil,desert,"California, USA",North America,soil,granitic,Cyanobacteria,unclassified,Nostocales,Fortieaceae,Roholtiella,Roholtiella mojaviensis,NA,NA,NA
+Scytolyngbya_sp.,Scytolyngbya sp.,Scytolyngbya_sp.,freshwater stream,fresh_water,tropical,"Hawaii,
+USA",Pacific Islands,fresh water,,Cyanobacteria,unclassified,Leptolynbyales,Leptolyngbyaceae,Scytolyngbya,Scytolyngbya sp.,22,2335,610
+Scytonema_hyalinum,Scytonema hyalinum,Scytonema_hyalinum,desert soil,desert_soil,desert,"California,
+USA",North America,soil,gneiss,Cyanobacteria,unclassified,Nostocales,Scytonemataceae,Scytonema,Scytonema hyalinum,20.1,128,619
+Scytonematopsis_contorta,Scytonematopsis contorta,Scytonematopsis_contorta,tropical vernal pool,vernal_pool,tropical,"Hawaii,
+USA",Pacific Islands,hydroterrestrial,,Cyanobacteria,unclassified,Nostocales,unclassified,Scytonematopsis,Scytonematopsis contorta,22.1,2985,339
+Spirirestis_raphaelensis,Spirirestis raphaelensis,Spirirestis_raphaelensis,desert soil,desert_soil,desert,"California,
+USA",North America,soil,granitic,Cyanobacteria,unclassified,Nostocales,Tolypothrichaceae,Spirirestis,Spirirestis raphaelensis,21.2,119,500
+Stenomitos_rutilans,Stenomitos rutilans,Stenomitos_rutilans,cave rock wall,rock_wall,tropical,"Hawaii,
+USA",Pacific Islands,subaerial,,Cyanobacteria,unclassified,Leptolynbyales,Leptolyngbyaceae,Stenomitos,Stenomitos rutilans,23.1,3045,106
+Symplocastrum_torsivum,Symplocastrum torsivum,Symplocastrum_torsivum,grassland soil,temperate_soil,temperate,"Colorado,
+USA",North America,soil,,Cyanobacteria,unclassified,Coleofasciculales,Coleofasciculaceae,Symplocastrum,Symplocastrum torsivum,8.4,365,1622
+Tildeniella_nuda,Tildeniella nuda,Tildeniella_nuda,temperate wet wall,wet_wall,temperate,"Zurich,
+Switzerland",Europe,subaerial,,Cyanobacteria,unclassified,Oculatellales,unclassified,Tildeniella,Tildeniella nuda,9.1,1102,451
+Tildeniella_torsiva,Tildeniella torsiva,Tildeniella_torsiva,temperate wet wall,wet_wall,temperate,"Kosice,
+Slovakia",Europe,subaerial,limestone,Cyanobacteria,unclassified,Oculatellales,unclassified,Tildeniella,Tildeniella torsiva,5.2,779,565
+Timaviella_obliquedivisa,Timaviella obliquedivisa,Timaviella_obliquedivisa,desert wet wall,wet_wall,desert,"Utah,
+USA",North America,subaerial,,Cyanobacteria,unclassified,Oculatellales,Oculatellaceae.,Timaviella,Timaviella obliquedivisa,9.9,229,1757
+Timaviella_radians,Timaviella radians,Timaviella_radians,desert wet wall,wet_wall,desert,"Utah,
+USA",North America,subaerial,,Cyanobacteria,unclassified,Oculatellales,Oculatellaceae,Timaviella,Timaviella radians,NA,NA,NA
+Tolypothrix_brevis,Tolypothrix brevis,Tolypothrix_brevis,desert wet wall,wet_wall,desert,"Utah,
+USA",North America,subaerial,,Cyanobacteria,unclassified,Nostocales,Tolypothrichaceae,Tolypothrix,Tolypothrix brevis,10.2,220,1684
+Tolypothrix_carrinoi,Tolypothrix carrinoi,Tolypothrix_carrinoi,cave rock wall,wet_wall,tropical,"Hawaii,
+USA",Pacific Islands,subaerial,,Cyanobacteria,unclassified,Nostocales,Tolypothrichaceae,Tolypothrix,Tolypothrix carrinoi,23.6,1291,21
+Trichormus_sp.,Trichormus sp.,Trichormus_sp.,desert soil,desert_soil,desert,"Tarapaca,
+Chile",South America,soil,,Cyanobacteria,unclassified,Nostocales,Aphanizomenonaceae,"""Trichormus""",unclassified,16.6,3,1167
+Trichotorquatus_andrei,Trichotorquatus andrei,Trichotorquatus_andrei,desert soil,desert_soil,desert,"California, USA",North America,soil,,Cyanobacteria,unclassified,Oculatellales,Oculatellaceae,Trichotorquatus,Trichortorquatus andrei,19.8,138,700
